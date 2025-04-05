@@ -3,9 +3,9 @@ import time
 
 MAXIMA_DISTANCIA = 7
 
-def generar_datos(n, semilla):
+def generar_datos(largo, semilla):
     random.seed(semilla)
-    return [random.randint(0, MAXIMA_DISTANCIA) for _ in range(n)]
+    return [random.randint(0, MAXIMA_DISTANCIA) for _ in range(largo)]
 
 def calcular_mejor_distancia(distancias, resultado):
     t1 = time.time()
