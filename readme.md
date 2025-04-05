@@ -17,5 +17,6 @@ sudo apt install python3
 Para ejecutar el archivo con la resolucion del ejercicio 2, utiliza el siguiente comando en la terminal:
 
 ```bash
+cd greedy/
 python3 ej2.py
 ```
