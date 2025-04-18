@@ -1,0 +1,147 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[a4paper, left=30mm, right=30mm, top=30mm, bottom=30mm, marginpar=25mm]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\setlength{\headheight}{29.5pt}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\renewcommand{\contentsname}{Índice}
+
+\renewcommand*{\maketitle}{
+\thispagestyle{plain}
+\begin{center}
+    \includegraphics[width=7cm]{logo.pdf} 
+    \\[1cm]
+    \textsc{\Large Teoría de Algoritmos}\\           
+    \textsc{\small Curso Echevarria}\\[0.4cm]    
+    { \huge \bfseries Trabajo Práctico X }\\[0.3cm]      
+    \rule{\textwidth}{0.4pt} \\[0.2cm] 
+    {\large \today  \\[0.4cm]}                          
+    \begin{minipage}{0.4\textwidth}
+    \begin{flushleft}
+        \large{NOMBRE - PADRON}\\
+    \end{flushleft}
+    \end{minipage}
+\end{center}
+}
+
+\title{x}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Supuestos}
+
+\subsubsection{Ejercicio2}
+
+\begin{itemize}
+    \item \paragraph{Se supone que las distancias se encuentran en una lista, donde cada posicion es la distancia a la anterior posicion, y cada posicion representa una parada, el resultado se genera almacenando los subindices de cada parada.}
+\end{itemize}
+
+
+\newpage
+
+\section{Diseño}
+
+\subsubsection{Ejercicio2}
+
+\begin{itemize}
+    \item En el main, se generan los archivos que almacenan las distancias a evaluar con una semilla fija, luego se generan los archivos donde van los resultados y se llama a la funcion que realiza el calculo.
+    \item La funcion generar\_datos, genera una lista con datos aleatorios basandose en la semilla recibida, estos datos son numeros enteros de 0 a 7 inclusive y se genera una lista de largo recibido que es retornada.
+    \item La funcion calcular\_mejor\_distancia recorre mientras que el elemento que estoy evaluando es menor que el largo de la lista de paradas, y luego avanza mientras que la suma de distancias sea menor que 7, modificando la posicion actual y luego una vez que la suma exceda 7 se agrega a la lista de resultados el indice -1 que seria la posicion que cumple el rango, luego continua siguiendo esta misma idea, y agrega el ultimo paraje para llegar hasta el final, imprime el tiempo que tardo y devuelve una lista con los resultados.
+    
+\end{itemize}
+
+\newpage
+
+
+
+\section{Analisis de complejidad}
+\subsubsection{Ejercicio2}
+
+\begin{itemize}
+    \item La parte de generar los datos no la tengo en cuenta en el analisis, solo la parte de calcular los resultados, time es O(1), inicializar variables tambien es O(1), len(distancias), es O(1), imprimir y utilizar append es O(1), los while anidados, comparten la condicion de que la posicion sea menor que el largo y en cada iteracion se avanza al menos una vez, por lo que la complejidad de esta parte es O(n), como conclusion, el resultado es O(n).
+
+\end{itemize}
+
+
+\newpage
+\section{Seguimiento de Ejemplo}
+\subsection{Ejercicio 2}
+\begin{itemize}
+    \item Vamos a hacer un ejemplo con la lista de distancias = [4, 3, 6, 6, 1, 7], Al llegar a la funcion se inicializan las variables, y el largo queda en 5, se entra al primer while ya que i esta en 0 que es menor que el largo, luego se entra al otro while, repitiendo la condicion y evaluando que el elemento en la lista en la posicion i (0) sea menor o igual que 7, como es el caso (4), se entra al while y se suma el actual en auxiliar(4) y se aumenta la posicion(1), como ahora la posicion es 1 y la suma en auxiliar es 4, evaluando la condicion en auxiliar + el valor en la nueva posicion(1) (valor = 3), como auxiliar(7) es menor o igual que 7, se suma este  valor parcial en auxiliar(7) y se suma en 1 la posicion(2), ahora al evaluar la condicion de menor o igual que 7 va a dar false porque el valor es 13 que es mayor, se sale de este while, se guarda el indice de la posicion actual a la anterior (2-1), y se continua iterando de esta forma hasta llegar a la ultima posicion (5), donde esta posicion ya no es menor que el largo por lo que se deja de iterar y se agrega este indice, se calcula e imprime el tiempo final. Devuelve una lista con los resultados obtenidos.
+\end{itemize}
+
+
+\section{Casos de prueba y mediciones}
+
+
+\begin{figure}[ht]
+
+\end{figure}
+
+\newpage
+
+\section{Resultados}
+\subsection{Ejercicio 2}
+\begin{itemize}
+    \item Los resultados para 1000, 10000, 100000, 500000 y 1000000, son <insertar resultados>, respectivamente, por lo que si el resultado esperado coincide con la complejidad analizada O(n)
+\end{itemize}
+
+\section{Referencias}
+\subsection{Ejercicio 2}
+\begin{itemize}
+    \item Van Rossum, G., \& Python Software Foundation. (2023). Built-in Functions: open. Retrieved from https://docs.python.org/3/library/functions.html\#open
+    \item Sedgewick, R., \& Wayne, K. (2011). Algorithms (4th ed.). Addison-Wesley.
+\end{itemize}
+
+\section{Generacion de sets}
+\subsection{Ejercicio 2}
+\begin{itemize}
+\item para generar los sets se realiza de la siguiente manera, utilizando 1 como semilla para el largo 1000, 2 como semilla para el largo 100000, 3, como semilla para largo 100000, 4 como semilla para largo 500000, y 5 como semilla para largo 1000000.
+
+    \begin{lstlisting}[frame=single]
+    def generar_datos(largo, semilla):
+    random.seed(semilla)
+    return [random.randint(0, MAXIMA_DISTANCIA) for _ in range(largo)]
+\end{lstlisting}
+\end{itemize}
+
+\end{document}
