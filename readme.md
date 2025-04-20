@@ -20,7 +20,7 @@ Para ejecutar el archivo con la resolucion del ejercicio 2, utiliza el siguiente
 cd DyC/
 python3 ej1.py
 ```
-# Ejercicio 2 - README
+# Ejercicio 2 
 
 Este archivo describe cómo ejecutar el script `ej2.py`.
 
@@ -50,7 +50,7 @@ python3 ej2.py
 
 
 
-# Ejercicio 3 - README
+# Ejercicio 3 
 
 Este archivo describe cómo ejecutar el script `ej3.py`.
 
