@@ -22,3 +22,12 @@ def calcular_fuerza(q, C=1):
 
     divide_conquista(0, n)
     return F
+if __name__ == '__main__':
+    with open("mil_cargas.txt", "r") as f:
+        mil_cargas = list(map(int, f.readlines()))
+
+    with open("diezmil_cargas.txt", "r") as f:
+        diezmil_cargas = list(map(int, f.readlines()))
+
+    print("Resultado para mil cargas:", calcular_fuerza(mil_cargas))
+    print("Resultado para diezmil cargas:", calcular_fuerza(diezmil_cargas))
