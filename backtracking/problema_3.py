@@ -1,3 +1,5 @@
+import time
+
 def backtracking(recorrido, n, indice, resultado, suma):
     if suma == n:
         if len(resultado) == 1 and len(resultado[0]) > len(recorrido):
@@ -6,33 +8,33 @@ def backtracking(recorrido, n, indice, resultado, suma):
         if len(resultado) == 0:
             resultado.append(recorrido[:])
         return
-    #del or para adelatente es una condicion de poda que añadi
     if suma > n or len(resultado) != 0 and len(recorrido) > len(resultado[0]):
         return
-    
-    while len(recorrido) >= 1 and indice <= len(recorrido) - 1:
+    indice = len(recorrido) - 1
+    while len(recorrido) >= 1 and indice <= len(recorrido) - 1 and indice >= 0:
         longitud = len(recorrido) - 1
         if len(recorrido) == 1:
             suma = recorrido[indice] + recorrido[longitud]
             recorrido.append(suma)
-            backtracking(recorrido,n,indice,resultado,suma)
+            backtracking(recorrido,n,len(recorrido) - 1,resultado,suma)
             return resultado
         else:
             suma = recorrido[indice] + recorrido[longitud]
             recorrido.append(suma)
             if indice > 0:
-                backtracking(recorrido,n,0,resultado,suma)
+                backtracking(recorrido,n,len(recorrido) - 1,resultado,suma)
             else: 
                 backtracking(recorrido,n,indice,resultado,suma)                   
             recorrido.pop()
-            indice = indice + 1
+            indice = indice - 1 
 
-def main():
-    recorrido = [1]
-    n = 7
-    resultado = []
-    suma = 0
-    backtracking(recorrido, n, 0, resultado, suma)
-    print(resultado) 
-
-main()
+if __name__ == "__main__":   
+    with open("set_de_datos.txt", "r") as f:
+        for linea in f:
+            n = int(linea.strip())
+            resultado = []
+            t1 = time.time()
+            backtracking([1], n, 0, resultado, 0)
+            t2 = time.time()
+            print(t2 - t1)
+            print(resultado[0][1:])
