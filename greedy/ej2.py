@@ -18,14 +18,16 @@ def calcular_mejor_distancia(distancias):
     lista_con_resultados.append(i)
    
     t2 = time.time()
+    print(lista_con_resultados)
     print("Tiempo de ejecución:", t2 - t1)
+
     return lista_con_resultados
 
 if __name__ == "__main__":
 
     with open("mil_distancias.txt", "r") as f:
         mil_distancias = list(map(int, f.readlines()))
-    
+
     with open("diezmil_distancias.txt", "r") as f:
         diezmil_distancias = list(map(int, f.readlines()))
     
@@ -42,4 +44,4 @@ if __name__ == "__main__":
     print("Resultado para diezmil distancias:", calcular_mejor_distancia(diezmil_distancias))
     print("Resultado para cienmil distancias:", calcular_mejor_distancia(cienmil_distancias))
     print("Resultado para quinientosmil distancias:", calcular_mejor_distancia(quinientosmil_distancias))
-    print("Resultado para un millón de distancias:", calcular_mejor_distancia(unmillon_distancias))    
+    print("Resultado para un millón de distancias:", calcular_mejor_distancia(unmillon_distancias))

@@ -36,5 +36,5 @@ if __name__ == "__main__":
             t1 = time.time()
             backtracking([1], n, 0, resultado, 0)
             t2 = time.time()
-            print(t2 - t1)
             print(resultado[0][1:])
+            print(t2 - t1)

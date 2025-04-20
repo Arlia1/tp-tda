@@ -1,8 +1,12 @@
+import time
+
+
 def calcular_fuerza(q, C=1):
     n = len(q)
     F = [0.0] * n
-
+    t1 = time.time()
     def divide_conquista(inicio, fin):
+
         if fin - inicio <= 1:
             return
 
@@ -21,7 +25,11 @@ def calcular_fuerza(q, C=1):
                 F[i] -= fuerza    # j > i -> fuerza negativa
 
     divide_conquista(0, n)
+    t2 = time.time()
+    print(F)
+    print("Tiempo de ejecución:", t2 - t1)
     return F
+
 if __name__ == '__main__':
     with open("mil_cargas.txt", "r") as f:
         mil_cargas = list(map(int, f.readlines()))
