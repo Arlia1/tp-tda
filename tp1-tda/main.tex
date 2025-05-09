@@ -1,4 +1,4 @@
-\\documentclass[a4paper, 12pt]{article}
+\documentclass[a4paper, 12pt]{article}
 \usepackage[a4paper, left=30mm, right=30mm, top=30mm, bottom=30mm, marginpar=25mm]{geometry}
 \usepackage{indentfirst}
 \usepackage{float}
@@ -82,40 +82,9 @@
 \end{itemize}
 \subsection{Diseño}
 \begin{itemize}
-\item En el main, se generan los archivos que almacenan las cargas, donde cada posición tiene un valor de carga distinta, desde -10 hasta 10.
-\item La función \texttt{calcular\_fuerza} aplica un algoritmo de División y Conquista, dividiendo el problema en subproblemas y juntando los resultados. El arreglo de cargas \texttt{Q} se divide recursivamente en mitades hasta llegar a subconjuntos de tamaño 1. Después de calcular las fuerzas dentro de cada mitad, se computan las interacciones cruzadas entre las partículas de la mitad izquierda y la mitad derecha. Esto asegura que todas las combinaciones $(i, j)$ con $i < j$ sean consideradas exactamente una vez. Las fuerzas se acumulan: \texttt{F[i]} recibe una fuerza negativa (j lo repele o atrae) y \texttt{F[j]} una positiva (i lo repele o atrae).
-\item Se utilizan dos estructuras de datos principales: las listas \texttt{Q} y \texttt{F}. La lista \texttt{Q} contiene los valores enteros de las cargas, y permite acceder en tiempo constante a cualquier elemento, lo cual es útil para recorrer y multiplicar cargas en distintos rangos. La lista \texttt{F} tiene el mismo tamaño y almacena las fuerzas acumuladas como números flotantes. Ambas listas permiten acceso aleatorio y modificación eficiente, lo cual es fundamental para implementar el algoritmo de División y Conquista sin necesidad de estructuras adicionales. Estas estructuras nativas de Python resultan adecuadas por su simplicidad y eficiencia.
+    \item En el main, se generan los archivos que almacenan las cargas, donde cada posicion tiene un valor de carga ditinta, desde -10 hasta 10.
+    \item La funcion calcular fuerza aplica un algoritmo de Division y Conquista, dividiendo el problema en subproblemas y juntando los resultados. El arreglo de cargas Q se divide recursivamente en mitades hasta llegar a subconjuntos de tamaño 1. Después de calcular las fuerzas dentro de cada mitad, se computan las interacciones cruzadas entre las partículas de la mitad izquierda y la mitad derecha. Esto asegura que todas las combinaciones (i, j) con i < j sean consideradas exactamente una vez. Las fuerzas se acumulan: F[i] recibe una fuerza negativa (j lo repele o atrae) y F[j] una positiva (i lo repele o atrae).
 
-\newpage
-\subsection{Pseudocodigo}
-	\begin{lstlisting}[frame=single]
-def calcular_fuerza(q, C=1):
-    n = len(q)
-    F = [0.0] * n
-    t1 = time.time()
-    def divide_conquista(inicio, fin):
-
-        if fin - inicio <= 1:
-            return
-        medio = (inicio + fin) // 2
-        # Resolver izquierda y derecha por separado
-        divide_conquista(inicio, medio)
-        divide_conquista(medio, fin)
-
-        # Calcular las interacciones cruzadas entre mitades
-        for i in range(inicio, medio):
-            for j in range(medio, fin):
-                distancia = j - i
-                fuerza = C * q[i] * q[j] / (distancia * distancia)
-                F[j] += fuerza    # i < j -> fuerza positiva
-                F[i] -= fuerza    # j > i -> fuerza negativa
-    divide_conquista(0, n)
-    t2 = time.time()
-    print(F)
-    print("Tiempo de ejecución:", t2 - t1)
-    return F
-
-	\end{lstlisting}
 
 \end{itemize}
 
@@ -125,30 +94,19 @@ def calcular_fuerza(q, C=1):
 \end{itemize}
 \subsection{Seguimiento}
 \begin{itemize}
-\item Se toma como ejemplo el vector de cargas \( q = [2, -1, 3, 1] \). El algoritmo comienza inicializando un arreglo de fuerzas \( F = [0.0, 0.0, 0.0, 0.0] \). Luego, se aplica recursivamente la estrategia de división y conquista.
+    \item Se toma como ejemplo el vector de cargas \( q = [2, -1, 3, 1] \). El algoritmo comienza inicializando un arreglo de fuerzas \( F \) con ceros. Luego, se aplica recursivamente la estrategia de división y conquista, dividiendo el vector en mitades, resolviendo internamente cada una y luego calculando las interacciones cruzadas entre las mitades.
 
-\item En el primer nivel de recursión, el vector se divide en dos mitades: izquierda \([2, -1]\) (índices 0–1) y derecha \([3, 1]\) (índices 2–3). Se continúa dividiendo hasta llegar a subarreglos de tamaño 1, sobre los cuales no se realiza ninguna operación.
-
-\item En la etapa de combinación, se calculan las interacciones cruzadas entre las mitades:
-\begin{itemize}
-    \item Para \(i = 0\) (carga 2) y \(j = 2\) (carga 3): distancia \(d = 2\), fuerza \(F = \frac{2 \cdot 3}{2^2} = 1.5\). Se actualiza: \(F[0] = -1.5\), \(F[2] = 1.5\).
-    \item Para \(i = 0\) (carga 2) y \(j = 3\) (carga 1): \(d = 3\), \(F = \frac{2 \cdot 1}{3^2} \approx 0.222\). Se actualiza: \(F[0] = -1.722\), \(F[3] = 0.222\).
-    \item Para \(i = 1\) (carga -1) y \(j = 2\) (carga 3): \(d = 1\), \(F = \frac{-1 \cdot 3}{1^2} = -3.0\). Se actualiza: \(F[1] = 3.0\), \(F[2] = -1.5\).
-    \item Para \(i = 1\) (carga -1) y \(j = 3\) (carga 1): \(d = 2\), \(F = \frac{-1 \cdot 1}{2^2} = -0.25\). Se actualiza: \(F[1] = 3.25\), \(F[3] = -0.028\).
-\end{itemize}
-
-\item Al finalizar todas las interacciones cruzadas, el vector de fuerzas contiene los valores netos acumulados para cada partícula: \( F = [-1.722, 3.25, -1.5, -0.028] \), lo que representa la fuerza total que cada carga recibe del sistema.
-
+    \item En este caso, se procesan las interacciones entre las partículas de la izquierda (\([2, -1]\)) y las de la derecha (\([3, 1]\)), actualizando la fuerza neta sobre cada partícula según la ley de Coulomb simplificada: \( F = C \cdot \frac{q_i \cdot q_j}{d^2} \), donde \( d \) es la distancia entre partículas. Al finalizar, el vector de fuerzas contiene los valores netos acumulados para cada partícula: \( F = [-1.722, 3.25, -1.5, -0.028] \), que representa la fuerza total que recibe cada carga del sistema.
 
 \end{itemize}
-\subsection{Casos de prueba y mediciones}
+\subsection{Mediciones}
 \begin{figure}[h]
 		\centering
 		\includegraphics[width=\textwidth]{ej1.png}
 	\end{figure}
 \subsection{Resultados}
 \begin{itemize}
-    \item Los resultados, segun la cantidad de particulas con las cantidades de 100, 200, 400, 600, 800 y 1000, son los esperados y coinciden con la complejidad.
+    \item Los resultados, segun la medicion realizada, son los esperados a partir del analisis realizados previamente
 \end{itemize}
 \subsection{Generacion de sets}
 \begin{itemize}
@@ -290,8 +248,9 @@ Para el seguimiento tomamos como n = 4 para encontrar la menor suma encadenada d
 	\item \(6 = 4 + 2\)
 	\item \(8 = 4 + 4\)
 \end{itemize}
-    cada una de estas combinaciones posibles genera una nueva llamada recursiva, por lo tanto cada llamada recursiva puede tener multiples hijos el cual va en aumento si el n esmayor y a medida que la variables rrecorido va en aumento tambien aumentario los hijos generados de mane exponecial en el peor de los caso, por lo tanto la complejidad en el peor  de los caso es O(2^n)
+    cada una de estas combinaciones posibles genera una nueva llamada recursiva, por lo tanto cada llamada recursiva puede tener multiples hijos el cual va en aument0 si el n esmayor y a medida que la variables rrecorido va en aumento tambien aumentario los hijos generados de mane exponecial en el peor de los caso, por lo tanto la complejidad en el peor  de los caso es O(2^n)
 
+	
 \subsection{Set de datos}
 los sed de datos para el problema se generan de con el siguiente codigo 
 	\begin{lstlisting}[frame=single]
