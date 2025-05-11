@@ -111,12 +111,9 @@ def calcular_fuerza(q, C=1):
                 F[i] -= fuerza    # j > i -> fuerza negativa
     divide_conquista(0, n)
     t2 = time.time()
-    print(F)
-    print("Tiempo de ejecución:", t2 - t1)
+    print(F\    print(\"Tiempo de ejecucion:", t2 - t1)
     return F
-
 	\end{lstlisting}
-
 \end{itemize}
 
 \subsection{Analisis de Complejidad}
@@ -161,6 +158,7 @@ def calcular_fuerza(q, C=1):
 
 \begin{itemize}
 	\item Se supone que las distancias se encuentran en una lista, donde cada posición es la distancia a la anterior posición, y cada posición representa una parada. El resultado se genera almacenando los subíndices de cada parada.
+        \item Se supone que los valores de los enteros almacenados en la lista no superan 7.
 \end{itemize}
 
 \subsection{Diseño}
@@ -169,6 +167,35 @@ def calcular_fuerza(q, C=1):
     \item En el main, se generan los archivos que almacenan las distancias a evaluar con una semilla fija, luego se generan los archivos donde van los resultados y se llama a la funcion que realiza el calculo.
     \item La funcion generar\_datos, genera una lista con datos aleatorios basandose en la semilla recibida, estos datos son numeros enteros de 0 a 7 inclusive y se genera una lista de largo recibido que es retornada.
     \item La funcion calcular\_mejor\_distancia recorre mientras que el elemento que estoy evaluando es menor que el largo de la lista de paradas, y luego avanza mientras que la suma de distancias sea menor que 7, modificando la posicion actual y luego una vez que la suma exceda 7 se agrega a la lista de resultados el indice -1 que seria la posicion que cumple el rango, luego continua siguiendo esta misma idea, y agrega el ultimo paraje para llegar hasta el final, imprime el tiempo que tardo y devuelve una lista con los resultados.
+
+    Se utiliza la estructura de datos "Lista simple"
+
+\subsection{Pseudocodigo}
+	\begin{lstlisting}[frame=single]
+		 
+        funcion calcular_mejor_distancia(distancias):
+            Iniciar t1 como el tiempo actual
+            Inicializar i como 0
+            Obtener largo como la longitud de distancias
+            Crear lista_con_resultados como una lista vacia
+        
+            Mientras i sea menor que largo:
+                Inicializar auxiliar como 0
+                Mientras i sea menor que largo y auxiliar + distancias[i] sea menor o igual a MAXIMA_DISTANCIA:
+                    Sumar distancias[i] a auxiliar
+                    Incrementar i en 1
+                Agregar i-1 a lista_con_resultados
+        
+            Agregar i a lista_con_resultados
+        
+            Iniciar t2 como el tiempo actual
+            Imprimir lista_con_resultados
+            Imprimir "Tiempo de ejecucion:" seguido de t2 - t1
+        
+            Retornar lista_con_resultados
+        ]
+	\end{lstlisting}
+    
     
 \end{itemize}
 
@@ -208,7 +235,7 @@ def calcular_fuerza(q, C=1):
 
 \subsection{Generacion de sets}
 \begin{itemize}
-\item para generar los sets se realiza de la siguiente manera, utilizando 1 como semilla para el largo 1000, 2 como semilla para el largo 100000, 3, como semilla para largo 100000, 4 como semilla para largo 500000, y 5 como semilla para largo 1000000.
+\item para generar los sets se realiza de la siguiente manera, utilizando 1 como semilla para el largo 1000, 2 como semilla para el largo 100000, 3, como semilla para largo 100000, 4 como semilla para largo 500000, y 5 como semilla para largo 1000000. Los sets de largo 50, 5000, 20000 y 30000, estan generados con la semilla 21. 
 
     \begin{lstlisting}[frame=single]
     def generar_datos(largo, semilla):
@@ -314,10 +341,7 @@ los sed de datos para el problema se generan de con el siguiente codigo
     El set que termina generando la funcion termina siendo este set = [171, 127, 184, 75, 78, 55, 23, 21, 70, 143]. tambien se incluira un archivo llamado resultados k que serian los primeros encontrados por el algoritmo mas no los de menor longitud
 	
 \subsection{Tiempos de ejecución}
-    En la tabla y grafico n es el entero positivo para el cual calculamos la suma encadenada de longitud mínima y k es la longitud de la primera suma encadenada que da como resulado n(no es la de longitud minima).
-    
-    
-\newline
+    En la tabla y grafico n es el entero positivo para el cual calculamos la suma encadenada de longitud mínima y k es la longitud de la primera suma encadenada que da como resulado n(no es la de longitud minima).\newline
     
     \begin{tabular}{|c|c|c|}
     \hline
