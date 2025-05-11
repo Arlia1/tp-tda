@@ -1,4 +1,4 @@
-\\documentclass[a4paper, 12pt]{article}
+\documentclass[a4paper, 12pt]{article}
 \usepackage[a4paper, left=30mm, right=30mm, top=30mm, bottom=30mm, marginpar=25mm]{geometry}
 \usepackage{indentfirst}
 \usepackage{float}
@@ -231,9 +231,12 @@ Una suma encadenada es una secuencia de números a0, a1, ..., an tal que a0=1 y 
 
 \indent Para desarrollar un algoritmo de Backtracking que pueda calcular una suma encadenada de longitud mínima para un entero positivo n y tambien tiene que ser n >= 2 ya que no tiene sentido calcular un n = 1 ya que es sencillo.
 
-\subsection{Diseño}
+\subsection{Diseño y estructuras de datos utilizadas}
 Para este ejercicio, se utilizo bactraking el cual se implemento utilizando la recursivida, se penso en un arbol que contenga las posibles soluciones para un n buscado siendo la raiz 1 y siendo los hijos las posibles sumas encadenas posibles por las sumas de los nodos  rrecoridos desde la raiz haste un hijo dado, el recorrido del la raiz hasta el hijo seria la longitud de la suma encadenada. La manera de recorrer el arbol es meramente parecida a DFS.
-    por ejemplo tenemos como recorrido inicial a recorrido = [1] las posibles sumas encadenadas posibloes son 2  = 1 + 1 y leugo 2 tiene dos posibles hijos que serian 4 = 2 + 2 y 3 = 3 + 1 perel algoritmos va recorriendo el arbol de derecha a esquierda y asi iterando suma por suma terminamos recorriendo todo;
+    por ejemplo tenemos como recorrido inicial a recorrido = [1] las posibles sumas encadenadas posibloes son 2  = 1 + 1 y leugo 2 tiene dos posibles hijos que serian 4 = 2 + 2 y 3 = 3 + 1 perel algoritmos va recorriendo el arbol de derecha a esquierda y asi iterando suma por suma terminamos recorriendo todo.
+\newline
+
+    Las estructuras de datos utilizadas en el diseño para resolver el problemas es una lista de python en el cual se va añadiendo el posible recorrido
 
 \subsection{Pseudocodigo}
 	\begin{lstlisting}[frame=single]
@@ -283,19 +286,22 @@ Para el seguimiento tomamos como n = 4 para encontrar la menor suma encadenada d
 
 \subsection{Complejidad}
 	
-	
-	El algoritmo que implementa bactraking explora todas las posibles sumas encadenadas que se pueden hacer con los elementos de un estado de rrecorrido, por ejemplo si recorrido = [1, 2, 4] las posibles sumas encadenas son 
-\begin{itemize}
-	\item  \(5 = 1 + 4\)
-	\item \(6 = 4 + 2\)
-	\item \(8 = 4 + 4\)
-\end{itemize}
-    cada una de estas combinaciones posibles genera una nueva llamada recursiva, por lo tanto cada llamada recursiva puede tener multiples hijos el cual va en aumento si el n esmayor y a medida que la variables rrecorido va en aumento tambien aumentario los hijos generados de mane exponecial en el peor de los caso, por lo tanto la complejidad en el peor  de los caso es O(2^n)
 
+    Puntos a tener en cuenta para calcular la complejidad de la funcion bactraking:
+
+\begin{itemize}
+	\item  n es un entero positivo al cual queremos calcular la suma encadenada de longitud minima
+    \item  una llamada recursiva puede generar una cantidad de llamadas recursivas igual a len(recorrido)
+	\item Por cada nivel del arbol de deciciones la cantidad de llamadas recursivas es igual k! siendo k = el nivel
+	\item las cantidad de llamdas recursivas no depende totalmente de n si no mas bien en que nivel del arbol encontramos la primer suma encadena cumpla los requisitos
+\end{itemize}
+    Por lo tanto si k lo definimos como el nivel en el cual se encuantra la primer suma encadenada que cumple que es n, entonces la complejidad seria O(k!) en el peor de los casos porque por cada nivel se generan k! llamadas recursivas
+
+    
 \subsection{Set de datos}
 los sed de datos para el problema se generan de con el siguiente codigo 
 	\begin{lstlisting}[frame=single]
-		def generar_sets(cantidad, semilla=42):
+		def generar_sets(cantidad, semilla=27):
 		random.seed(semilla)
 		sets = []
 		for _ in range(cantidad):
@@ -303,18 +309,48 @@ los sed de datos para el problema se generan de con el siguiente codigo
 			sets.append(n)
 		return sets	
 	\end{lstlisting}
+
+    El set que termina generando la funcion termina siendo este set = [171, 127, 184, 75, 78, 55, 23, 21, 70, 143]. tambien se incluira un archivo llamado resultados k que serian los primeros encontrados por el algoritmo mas no los de menor longitud
 	
 \subsection{Tiempos de ejecución}
+    En la tabla y grafico n es el entero positivo para el cual calculamos la suma encadenada de longitud mínima y k es la longitud de la primera suma encadenada que da como resulado n(no es la de longitud minima).
+    
+    
+\newline
+    
+    \begin{tabular}{|c|c|c|}
+    \hline
+    n & tiempo medido(en segundos) & k \\
+    \hline
+    171 & 28.605 & 11 \\
+    127 & 23.844 & 12 \\
+    184 & 3.090 & 10 \\
+    75  & 0.296 & 9\\
+    78  & 0.303 & 9\\
+    55  & 0.272 & 9 \\
+    23  & 0.005 & 7\\
+    21  & 0.002 & 6\\
+    70  & 0.284 & 8\\
+    143 & 31.937 & 11\\
+    \hline
+\end{tabular}
 
-	\begin{figure}[H]
+
+
+	\begin{figure}[H] 
 		\centering
-		\includegraphics[width=\textwidth]{grafico.png}
+		\includegraphics[width=\textwidth]{grafico_2.png}
+	\end{figure}
+
+    \begin{figure}[H] 
+		\centering
+		\includegraphics[width=\textwidth]{grafico_k.png}
 	\end{figure}
     
 
 \subsection{Informe de resultados}
 
-    Por medio del grafico corresponde como \(O(2^n)\) en el peor de los casos que seria que se hagan todas las posibles sumas encadenas, en le grafico vemos que al pricipio los valores de n como por ejemplo entre n = 0 hasta n = 50 el tiempo es casi 0 pero despues con valor aprox 150 se eleva exponencialmente y los demas valores, el cual es un compotamiento de la complejidad exponencial, tambien pueden haber valores de n que podriamos pensar que su tiempo aumentaria exponencialmente pero tambien puede que tarde menos de los pensado ya que el algoritmo puede tambien podar y eso causaria que tarde menos y eso reduciria su tiempo.
+    Para analizar la complejidad temporal del algoritmo, se midieron los tiempos de ejecucion para los valones de n y tambien el grafico para los valores de k. Por los resultado obtenido se vio que el tiempo crece rapidamente al aumentar k. El comportamiento observado en el gráfico se alinea con el tipo de crecimiento factorial, aunque se observaron ciertas desviaciones (por ejemplo, para k =12  el tiempo fue menor que para k=11), estas diferencias se explican por el uso de podas en el algoritmo, que permiten reducir el espacio de búsqueda efectivo. Esto significa que, si bien la complejidad teórica en el peor caso es  \(O(k!)\), en la práctica el algoritmo puede resolver algunos casos más rápido gracias a estas podas.
     
     
     
