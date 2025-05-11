@@ -290,12 +290,13 @@ Para el seguimiento tomamos como n = 4 para encontrar la menor suma encadenada d
     Puntos a tener en cuenta para calcular la complejidad de la funcion bactraking:
 
 \begin{itemize}
-	\item  n es un entero positivo al cual queremos calcular la suma encadenada de longitud minima
-    \item  una llamada recursiva puede generar una cantidad de llamadas recursivas igual a len(recorrido)
-	\item Por cada nivel del arbol de deciciones la cantidad de llamadas recursivas es igual k! siendo k = el nivel
-	\item las cantidad de llamdas recursivas no depende totalmente de n si no mas bien en que nivel del arbol encontramos la primer suma encadena cumpla los requisitos
+  \item Sea $n$ un entero positivo para el cual se desea encontrar una suma encadenada de longitud mínima.
+  \item Cada llamada recursiva puede generar una cantidad de llamadas recursivas igual a \texttt{len(recorrido)}, es decir, la cantidad de elementos en el camino actual.
+  \item En el nivel $k$ del árbol de decisiones, la cantidad de llamadas recursivas puede alcanzar un máximo de $k!$, ya que las decisiones se ramifican combinatoriamente según las opciones disponibles.
+  \item La cantidad total de llamadas recursivas no depende exclusivamente de $n$, sino de en qué nivel $k$ se encuentra la primera suma encadenada válida que cumple con los requisitos del problema.
 \end{itemize}
-    Por lo tanto si k lo definimos como el nivel en el cual se encuantra la primer suma encadenada que cumple que es n, entonces la complejidad seria O(k!) en el peor de los casos porque por cada nivel se generan k! llamadas recursivas
+
+\noindent Por lo tanto, si definimos $k$ como el nivel mínimo del árbol donde se encuentra la primera solución válida, la \textbf{complejidad en el peor caso} será $\mathcal{O}(k!)$, ya que en cada nivel hasta $k$, se pueden generar hasta $k!$ llamadas recursivas.
 
     
 \subsection{Set de datos}
